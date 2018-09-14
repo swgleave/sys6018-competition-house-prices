@@ -77,3 +77,69 @@ train2$MiscFeature[which(is.na(train2$MiscFeature))] <- "None"
 
 rmtrain2 <- train2[which(train$LotArea > (mean(train$LotArea) + 3 * sd(train$LotArea))),] # Remove 12 rows that have Lot Area outside 3 standard deviations
 train2 <- train2[which(train$LotArea < (mean(train$LotArea) + 3 * sd(train$LotArea))),]
+
+test <- read.csv("test.csv")
+
+collist2 <- names(test)
+indlist2 <- seq(1,80,by=1)
+collist2 <- cbind(collist2,indlist2) # Create a list of column names and their indexes
+
+testCat <- test[,c(2,3,6:19,22:26,28:34,36,40:43,48:59,61,62,64:66,73:75,77,79:80)] # Subset Categorical
+testCon <- test[,c(1,4:5,20:21,27,35,37:39,44:47,60,63,67:72,76,78)] # Subset Quantitative
+
+lapply(testCat,class)
+testCat <- lapply(testCat,as.factor)
+lapply(testCat,class)
+str(testCat) # Turn Categorical Subset into all Factors
+
+test2 <- cbind(testCat,testCon) # Recreate test with Categorical and Quantitative
+
+levels(test2$Alley) <- c(levels(test2$Alley),"None") # Add None level
+test2$Alley[which(is.na(test2$Alley))] <- "None"     # Change NAs to None
+
+test2$LotFrontage[which(is.na(test2$LotFrontage))] <- 0       # Set NAs to 0
+test2$MasVnrType[which(is.na(test2$MasVnrType))] <- "None"    # Set NAs to None
+test2$MasVnrArea[which(is.na(test2$MasVnrArea))] <- 0         # Set NAs to 0
+levels(test2$BsmtCond) <- c(levels(test2$BsmtCond),"None")    # Add None level
+test2$BsmtCond[which(is.na(test2$BsmtCond))] <- "None"        # Set NAs to None
+
+levels(test2$BsmtQual) <- c(levels(test2$BsmtQual),"None")
+test2$BsmtQual[which(is.na(test2$BsmtQual))] <- "None"
+
+test2$BsmtExposure[which(is.na(test2$BsmtExposure) & !is.na(test2$BsmtFinType1))] <- "No"      # Set unique NA to No
+levels(test2$BsmtExposure) <- c(levels(test2$BsmtExposure),"None")
+test2$BsmtExposure[which(is.na(test2$BsmtExposure))] <- "None"
+
+test2$BsmtFinType2[which(is.na(test2$BsmtFinType2) & !is.na(test2$BsmtFinType1))] <- "Unf"     # Set unique NA to Unf
+levels(test2$BsmtFinType2) <- c(levels(test2$BsmtFinType2),"None")
+test2$BsmtFinType2[which(is.na(test2$BsmtFinType2))] <- "None"
+
+levels(test2$BsmtFinType1) <- c(levels(test2$BsmtFinType1),"None")
+test2$BsmtFinType1[which(is.na(test2$BsmtFinType1))] <- "None"
+
+test2$Electrical[which(is.na(test2$Electrical))] <- "SBrkr"    # Set one NA to SBrkr (most common value)
+table(test2$Electrical)
+
+levels(test2$FireplaceQu) <- c(levels(test2$FireplaceQu),"None")
+test2$FireplaceQu[which(is.na(test2$FireplaceQu))] <- "None"
+
+levels(test2$GarageType) <- c(levels(test2$GarageType),"None")
+test2$GarageType[which(is.na(test2$GarageType))] <- "None"
+
+levels(test2$GarageFinish) <- c(levels(test2$GarageFinish),"None")
+test2$GarageFinish[which(is.na(test2$GarageFinish))] <- "None"
+
+levels(test2$GarageQual) <- c(levels(test2$GarageQual),"None")
+test2$GarageQual[which(is.na(test2$GarageQual))] <- "None"
+
+levels(test2$GarageCond) <- c(levels(test2$GarageCond),"None")
+test2$GarageCond[which(is.na(test2$GarageCond))] <- "None"
+
+levels(test2$PoolQC) <- c(levels(test2$PoolQC),"None")
+test2$PoolQC[which(is.na(test2$PoolQC))] <- "None"
+
+levels(test2$Fence) <- c(levels(test2$Fence),"None")
+test2$Fence[which(is.na(test2$Fence))] <- "None"
+
+levels(test2$MiscFeature) <- c(levels(test2$MiscFeature),"None")
+test2$MiscFeature[which(is.na(test2$MiscFeature))] <- "None"
