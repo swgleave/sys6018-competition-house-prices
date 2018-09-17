@@ -1,3 +1,4 @@
+library(MLmetrics)
 #split up train for testing
 trainsplit<- sample(1:1424, size=712) 
 trainset <- traindf[trainsplit,]
