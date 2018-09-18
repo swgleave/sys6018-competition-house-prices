@@ -176,11 +176,25 @@ yset <- ytrain[trainsplit,]
 yvalidset <- ytrain[-trainsplit,]
 trainset$SalePrice <- yset
 
-paramodel <- lm(SalePrice ~ OverallQual + OverallCond + Neighborhood + GrLivArea + LotArea + MSSubClass , data = trainset)
+paramodel <- lm(SalePrice ~ OverallQual + OverallCond + Neighborhood + GrLivArea + LotArea , data = trainset)
 guesses <- predict(paramodel,validset)
 guesses[which(guesses < 0)] <- -1 * guesses[which(guesses < 0)]
 
 RMSLE(guesses,yvalidset)
-# 0.1757234
+# 0.1843029
 
+####################
+####################
+#  Create Submission       
+#  
+####################
+####################
 
+submission <- predict(paramodel,testdf) #Use model to predict test set
+
+results = cbind(test$Id, submission) #create submission columns
+results = as.data.frame(results) #to df
+
+colnames(results) <- c('Id', 'SalePrice') #rename columns
+
+write.csv(results, 'submission.csv', row.names = FALSE) #write to csv
