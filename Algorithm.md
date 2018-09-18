@@ -2,7 +2,7 @@ Rationale behind choice of statistical Method - KNN
 
  As there are a large number of features in the model, it makes most sense to evaluate the model using simarity of 
  a point in the test dataset with points from the train dataset. KNN is easily one of the best choices for this use case. 
- We implemented the KNN from scratch using the following methods.
+ We implemented the KNN from scratch using the following steps.
  
  1. Calculate Euclidean distance between each point in the test dataset with train dataset - Accomplished this using matrix 
  operations and apply functions
